@@ -5,7 +5,7 @@ import com.sloth.exception.SlothException;
 /**
  * 数据源初始化失败
  *
- * @author lWX306898
+ * @author liuzhao04
  * @version 1.0, 2017年1月24日
  */
 public class InitSourceException extends SlothException

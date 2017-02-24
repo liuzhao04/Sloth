@@ -5,7 +5,7 @@ import java.io.FileNotFoundException;
 /**
  * Excel导入工具类
  *
- * @author lWX306898
+ * @author liuzhao04
  * @version 1.0, 2016年8月12日
  */
 public interface IExcelWriter

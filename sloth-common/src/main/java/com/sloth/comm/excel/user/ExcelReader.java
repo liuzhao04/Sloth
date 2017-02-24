@@ -29,7 +29,7 @@ import org.apache.poi.xssf.usermodel.XSSFCell;
  * 1.指定行列坐标<br>
  * 2.指定行坐标，和列名（此方法需要指定标题所在的行，在一个sheet页的读取过程中，标题行可以随时切换）
  *
- * @author lWX306898
+ * @author liuzhao04
  * @version 1.0, 2016年8月1日
  */
 public class ExcelReader
@@ -203,7 +203,7 @@ public class ExcelReader
     /**
      * 行读取工具
      *
-     * @author lWX306898
+     * @author liuzhao04
      * @version 1.0, 2016年8月1日
      */
     private class RowReader

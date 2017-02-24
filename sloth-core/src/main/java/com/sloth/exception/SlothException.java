@@ -3,7 +3,7 @@ package com.sloth.exception;
 /**
  * 内部异常定义
  *
- * @author lWX306898
+ * @author liuzhao04
  * @version 1.0, 2017年1月23日
  */
 public class SlothException extends Exception

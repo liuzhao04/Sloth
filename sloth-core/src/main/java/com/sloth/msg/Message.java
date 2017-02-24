@@ -7,7 +7,7 @@ import java.util.Map;
 /**
  * 消息定义
  *
- * @author lWX306898
+ * @author liuzhao04
  * @version 1.0, 2017年1月23日
  */
 public class Message implements Serializable

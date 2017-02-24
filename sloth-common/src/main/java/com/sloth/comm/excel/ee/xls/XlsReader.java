@@ -3,7 +3,9 @@ package com.sloth.comm.excel.ee.xls;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.poi.hssf.eventusermodel.HSSFEventFactory;
 import org.apache.poi.hssf.eventusermodel.HSSFListener;
@@ -26,7 +28,7 @@ import com.sloth.comm.excel.ee.IParseCell;
 /**
  * Excel读取工具
  *
- * @author lWX306898
+ * @author liuzhao04
  * @version 1.0, 2017年2月9日
  */
 public class XlsReader extends AbsExcelReader implements HSSFListener
@@ -47,10 +49,17 @@ public class XlsReader extends AbsExcelReader implements HSSFListener
 
     private int sheetIndex = -1;
 
+    private int lastRowId = -1;
+
+    private Map<Integer, Integer> colFlag;
+
+    private boolean hasEndLastRow = true;
+
     public XlsReader(String path, String[] sheetNames) throws Exception
     {
         super(path, sheetNames);
         cSheetNames = new ArrayList<String>();
+        colFlag = new HashMap<Integer, Integer>();
     }
 
     @Override
@@ -83,6 +92,11 @@ public class XlsReader extends AbsExcelReader implements HSSFListener
     @Override
     public void destory()
     {
+        if (colFlag != null)
+        {
+            colFlag.clear();
+            colFlag = null;
+        }
         if (is != null)
         {
             try
@@ -95,7 +109,7 @@ public class XlsReader extends AbsExcelReader implements HSSFListener
                 e.printStackTrace();
             }
         }
-        if(din != null)
+        if (din != null)
         {
             try
             {
@@ -107,7 +121,7 @@ public class XlsReader extends AbsExcelReader implements HSSFListener
                 e.printStackTrace();
             }
         }
-        if(poifs != null)
+        if (poifs != null)
         {
             try
             {
@@ -145,6 +159,8 @@ public class XlsReader extends AbsExcelReader implements HSSFListener
                             break;
                         }
                         iParseCell.startSheet(eSheet);
+                        colFlag.clear();
+                        hasEndLastRow = true;
                     }
                     else if (eSheet.isTheSame(cSheetNames.get(sheetIndex)))
                     {
@@ -159,6 +175,8 @@ public class XlsReader extends AbsExcelReader implements HSSFListener
                             break;
                         }
                         iParseCell.startSheet(eSheet);
+                        colFlag.clear();
+                        hasEndLastRow = true;
                     }
                 }
                 break;
@@ -167,14 +185,16 @@ public class XlsReader extends AbsExcelReader implements HSSFListener
                 String name = bsr.getSheetname();
                 cSheetNames.add(name);
                 break;
-            case RowRecord.sid: // 新的行到来
+            case RowRecord.sid: // 新的行参数记录
                 if (needMatchSheetNames && !isMatchedSheet())
                 {
                     break;
                 }
                 RowRecord rowrec = (RowRecord)record;
                 // 可获取列的ID
-                iParseCell.startRow(rowrec.getRowNumber(), rowrec.getFirstCol(), rowrec.getLastCol());
+                // iParseCell.startRow(rowrec.getRowNumber());
+                // lastRowId = rowrec.getLastCol();
+                colFlag.put(rowrec.getRowNumber(), rowrec.getLastCol());
                 break;
             case NumberRecord.sid: // 数字值
                 if (needMatchSheetNames && !isMatchedSheet())
@@ -182,8 +202,24 @@ public class XlsReader extends AbsExcelReader implements HSSFListener
                     break;
                 }
                 NumberRecord numrec = (NumberRecord)record;
-                ECell ec = new ECell(ECellType.XLS_NUMBER,Double.toString(numrec.getValue()));
+                if (lastRowId != numrec.getRow())
+                {
+                    lastRowId = numrec.getRow();
+                    // 如果上一行没有结束，发送结束信息
+                    if (!hasEndLastRow)
+                    {
+                        iParseCell.endRow(numrec.getRow() - 1);
+                    }
+                    iParseCell.startRow(numrec.getRow());
+                    hasEndLastRow = false;
+                }
+                ECell ec = new ECell(ECellType.XLS_NUMBER, Double.toString(numrec.getValue()));
                 iParseCell.doCell(numrec.getRow(), numrec.getColumn(), ec);
+                if (numrec.getColumn() == (colFlag.get(numrec.getRow()) - 1))
+                {
+                    iParseCell.endRow(numrec.getRow());
+                    hasEndLastRow = true;
+                }
                 break;
             // SSTRecords store a array of unique strings used in Excel.
             case SSTRecord.sid: // 字符串表:一个workbook只有一个表
@@ -196,9 +232,25 @@ public class XlsReader extends AbsExcelReader implements HSSFListener
                     break;
                 }
                 LabelSSTRecord lrec = (LabelSSTRecord)record;
+                if (lastRowId != lrec.getRow())
+                {
+                    lastRowId = lrec.getRow();
+                    // 如果上一行没有结束，发送结束信息
+                    if (!hasEndLastRow)
+                    {
+                        iParseCell.endRow(lrec.getRow() - 1);
+                    }
+                    iParseCell.startRow(lrec.getRow());
+                    hasEndLastRow = false;
+                }
                 ECell ecStr = new ECell(ECellType.XLS_STRING);
                 ecStr.setValue(sstrec.getString(lrec.getSSTIndex()).getString());
                 iParseCell.doCell(lrec.getRow(), lrec.getColumn(), ecStr);
+                if (lrec.getColumn() == (colFlag.get(lrec.getRow()) - 1))
+                {
+                    iParseCell.endRow(lrec.getRow());
+                    hasEndLastRow = true;
+                }
                 break;
         }
     }

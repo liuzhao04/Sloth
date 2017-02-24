@@ -22,7 +22,7 @@ import com.sloth.comm.unzip.UnzipUtils;
 /**
  * ftp文件下载对象：缓存一组ftp连接，负责对单个文件进行下载， 如果是下载zip文件，下载后直接解压，并删除源文件
  * 
- * @author lWX306898
+ * @author liuzhao04
  * @version 1.0, 2016年5月19日
  */
 public class FtpDownloader

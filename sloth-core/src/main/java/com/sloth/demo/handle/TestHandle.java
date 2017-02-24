@@ -13,7 +13,7 @@ import com.sloth.msg.MessageUnit;
 /**
  * 将字符串转成整数，head增加 (id x 3)
  *
- * @author lWX306898
+ * @author liuzhao04
  * @version 1.0, 2017年1月26日
  */
 public class TestHandle implements IHandle

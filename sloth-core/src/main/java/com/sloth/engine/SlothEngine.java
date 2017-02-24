@@ -6,6 +6,8 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.sloth.comm.utils.PropertiesUtils;
 import com.sloth.comm.utils.ReflectUtils;
@@ -24,10 +26,9 @@ import sun.misc.SignalHandler;
 /**
  * 同步处理引擎
  *
- * @author lWX306898
+ * @author liuzhao04
  * @version 1.0, 2017年1月24日
  */
-@SuppressWarnings("restriction")
 public class SlothEngine
 {
     private ISource iSource; // 数据源
@@ -50,6 +51,9 @@ public class SlothEngine
 
     private ConfigureHelp cfgHelp = null;
 
+    private Logger logger = LoggerFactory.getLogger(SlothEngine.class);
+
+    @SuppressWarnings("restriction")
     public SlothEngine() throws SlothException
     {
         init();
@@ -73,6 +77,7 @@ public class SlothEngine
 
     private void init() throws SlothException
     {
+        logger.info("引擎初始化中...");
         // 1. 加载配置文件
         try
         {
@@ -84,11 +89,14 @@ public class SlothEngine
             throw new ConfigLoadException(CFG_PATH, e);
         }
 
+        logger.info("数据源初始化中...");
         // 2. 初始化数据源
         initSource();
 
+        logger.info("工作流初始化中...");
         // 3. 初始化工作流
         initWorkFlows();
+
     }
 
     /**
@@ -137,13 +145,23 @@ public class SlothEngine
      */
     public void start() throws SlothException
     {
+        logger.info("引擎启动...");
         while (true)
         {
             switch (status)
             {
                 case NOARMAL:
-                    if(!iSource.hasNext())
+                    if (!iSource.hasNext())
                     {
+                        checkSleep(0);
+                        try
+                        {
+                            Thread.sleep(NORMAL_SLEEP_MSECOND);
+                        }
+                        catch (Exception e)
+                        {
+                            e.printStackTrace();
+                        }
                         continue;
                     }
                     Message msg = iSource.getMessage();
@@ -167,6 +185,7 @@ public class SlothEngine
                     {
                         status = MainStatus.NOARMAL;
                     }
+                    logger.info("休眠状态,等待数据...");
                     try
                     {
                         Thread.sleep(SLEEP_SLEEP_SECOND * 1000);
@@ -235,7 +254,7 @@ public class SlothEngine
     /**
      * 主进程状态定义
      * 
-     * @author lWX306898
+     * @author liuzhao04
      * @version 1.0, 2016年12月23日
      */
     private enum MainStatus
@@ -260,7 +279,7 @@ public class SlothEngine
     /**
      * 退出信号处理
      *
-     * @author lWX306898
+     * @author liuzhao04
      * @version 1.0, 2016年12月23日
      */
     public class QuitSingnalHandler implements SignalHandler
@@ -276,7 +295,7 @@ public class SlothEngine
     {
         try
         {
-            new SlothEngine().start();;
+            new SlothEngine().start();
         }
         catch (SlothException e)
         {

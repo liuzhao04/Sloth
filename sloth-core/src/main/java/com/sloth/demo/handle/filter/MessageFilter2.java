@@ -8,7 +8,7 @@ import com.sloth.msg.MessageUnit;
 /**
  * 过滤出ID 大于 5 且 body value小于11的数据
  * 
- * @author lWX306898
+ * @author liuzhao04
  * @version 1.0, 2017年1月26日
  */
 public class MessageFilter2 extends MessageFilter

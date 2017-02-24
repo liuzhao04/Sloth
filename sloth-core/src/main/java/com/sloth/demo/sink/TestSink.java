@@ -1,5 +1,6 @@
 package com.sloth.demo.sink;
 
+import com.sloth.configure.ConfigureHelp;
 import com.sloth.exception.SlothException;
 import com.sloth.msg.Message;
 import com.sloth.sink.ISink;
@@ -18,6 +19,13 @@ public class TestSink implements ISink
     {
         // TODO Auto-generated method stub
 
+    }
+
+    @Override
+    public void init(ConfigureHelp sHelp) throws SlothException
+    {
+        // TODO Auto-generated method stub
+        
     }
 
 }

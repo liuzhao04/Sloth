@@ -10,7 +10,7 @@ import java.net.URLConnection;
 /**
  * http request 类 ：处理一个服务器服务的post/get请求
  *
- * @author lWX306898
+ * @author liuzhao04
  * @version 1.0, 2016年5月19日
  */
 public class HttpRequest

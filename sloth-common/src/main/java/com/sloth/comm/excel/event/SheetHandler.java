@@ -11,7 +11,7 @@ import org.apache.poi.xssf.usermodel.XSSFComment;
 /**
  * 大型Excel Sheet页面内容处理句柄类
  *
- * @author lWX306898
+ * @author liuzhao04
  * @version 1.0, 2016年8月4日
  */
 public abstract class SheetHandler implements SheetContentsHandler

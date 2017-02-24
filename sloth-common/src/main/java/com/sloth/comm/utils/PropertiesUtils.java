@@ -12,7 +12,7 @@ import java.util.Properties;
 /**
  * 配置文件加载工具
  *
- * @author lWX306898
+ * @author liuzhao04
  * @version 1.0, 2016年12月22日
  */
 public class PropertiesUtils
@@ -148,7 +148,7 @@ public class PropertiesUtils
     /**
      * 资源文件加载顺序定义
      * 
-     * @author lWX306898
+     * @author liuzhao04
      * @version 1.0, 2016年12月23日
      */
     public enum LoadOrder

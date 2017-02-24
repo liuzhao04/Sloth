@@ -5,7 +5,7 @@ import com.sloth.exception.SlothException;
 /**
  * 处理初始化失败
  *
- * @author lWX306898
+ * @author liuzhao04
  * @version 1.0, 2017年1月24日
  */
 public class InitHandleException extends SlothException

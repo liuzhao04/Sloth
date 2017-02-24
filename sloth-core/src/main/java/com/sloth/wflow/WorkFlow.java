@@ -17,7 +17,7 @@ import com.sloth.sink.ISink;
 /**
  * 工作流定义
  *
- * @author lWX306898
+ * @author liuzhao04
  * @version 1.0, 2017年1月24日
  */
 public class WorkFlow
@@ -66,6 +66,7 @@ public class WorkFlow
         try
         {
             iSink = ReflectUtils.<ISink> createInstance(sClass);
+            iSink.init(sHelp);
         }
         catch (ClassNotFoundException | InstantiationException | IllegalAccessException e)
         {

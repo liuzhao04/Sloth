@@ -17,7 +17,7 @@ import org.xml.sax.XMLReader;
 /**
  * 大型Excel读取类
  *
- * @author lWX306898
+ * @author liuzhao04
  * @version 1.0, 2016年8月4日
  */
 public class BigExcelReader

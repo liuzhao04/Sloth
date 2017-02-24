@@ -4,15 +4,10 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Properties;
 
-import org.apache.commons.mail.DefaultAuthenticator;
-import org.apache.commons.mail.Email;
-import org.apache.commons.mail.EmailException;
-import org.apache.commons.mail.HtmlEmail;
-
 /**
  * 常用工具箱
  *
- * @author lWX306898
+ * @author liuzhao04
  * @version 1.0, 2017年1月20日
  */
 public class Common
@@ -91,76 +86,6 @@ public class Common
         }
         today = tToday;
         return true;
-    }
-
-    /**
-     * 邮件发送函数
-     * 
-     * @param to
-     * @param subject
-     * @param msg
-     * @throws EmailException
-     */
-    public static void sendEmail(String to, String subject, String msg) throws EmailException
-    {
-        String smtpHost = "smtp.huawei.com";
-        Email email = new HtmlEmail();
-        email.setHostName(smtpHost);
-        email.setAuthenticator(getEmailAuthenticator());
-        email.setFrom("liuzhao5@huawei.com", "巡检云对接工具");
-        email.setSubject(subject);
-        email.setContent(msg, "text/html;charset=gb2312");
-        email.addTo(to);
-        email.send();
-    }
-
-    /**
-     * 邮件发送函数
-     * 
-     * @param to
-     * @param subject
-     * @param msg
-     * @throws EmailException
-     */
-    public static void sendEmail(String[] tos, String subject, String msg) throws EmailException
-    {
-        String smtpHost = "smtp.huawei.com";
-        Email email = new HtmlEmail();
-        email.setHostName(smtpHost);
-        email.setAuthenticator(getEmailAuthenticator());
-        email.setFrom("liuzhao5@huawei.com", "巡检云对接工具");
-        email.setSubject(subject);
-        email.setContent(msg, "text/html;charset=gb2312");
-        email.addTo(tos);
-        email.send();
-    }
-
-    /**
-     * 邮箱账号
-     * 
-     * @return
-     */
-    private static DefaultAuthenticator getEmailAuthenticator()
-    {
-        return new DefaultAuthenticator(decode("108 87 88 51 48 54 56 57 56"), decode("108 122 37 49 50 56 49 50 56"));
-    }
-
-    /**
-     * 数据解密
-     *
-     * @param cipherText
-     * @return
-     */
-    private static String decode(String cipherText)
-    {
-        String[] sBytes = cipherText.split(" ");
-        byte[] bytes = new byte[sBytes.length];
-        int index = 0;
-        for (String sb : sBytes)
-        {
-            bytes[index++] = Byte.valueOf(sb);
-        }
-        return new String(bytes);
     }
 
     /**

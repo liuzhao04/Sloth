@@ -9,7 +9,7 @@ import com.sloth.msg.MessageBuilder;
 /**
  * 统计(id x 3)的和 
  *
- * @author lWX306898
+ * @author liuzhao04
  * @version 1.0, 2017年1月26日
  */
 public class TestHandle1 implements IHandle

@@ -9,7 +9,7 @@ import org.apache.commons.lang3.StringUtils;
 /**
  * Excel读取抽象类
  *
- * @author lWX306898
+ * @author liuzhao04
  * @version 1.0, 2017年2月9日
  */
 public abstract class AbsExcelReader

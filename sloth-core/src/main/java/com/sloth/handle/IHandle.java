@@ -7,7 +7,7 @@ import com.sloth.msg.Message;
 /**
  * 数据处理器
  * 
- * @author lWX306898
+ * @author liuzhao04
  * @version 1.0, 2017年1月23日
  */
 public interface IHandle

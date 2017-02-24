@@ -29,7 +29,7 @@ import org.apache.commons.io.FileUtils;
 /**
  * 文件处理工具
  * 
- * @author lWX306898
+ * @author liuzhao04
  * @version 1.0, 2015-12-15
  */
 public class FileUtil
@@ -558,7 +558,7 @@ public class FileUtil
     /**
      * 文件处理接口
      * 
-     * @author lWX306898
+     * @author liuzhao04
      * @version 1.0, 2016年3月31日
      */
     public static interface DoSomethingCallback

@@ -3,7 +3,7 @@ package com.sloth.comm.utils;
 /**
  * Java反射工具箱
  *
- * @author lWX306898
+ * @author liuzhao04
  * @version 1.0, 2016年12月23日
  */
 public class ReflectUtils

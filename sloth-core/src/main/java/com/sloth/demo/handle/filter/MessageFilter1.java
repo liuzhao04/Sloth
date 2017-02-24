@@ -7,7 +7,7 @@ import com.sloth.handle.filter.MessageFilter;
 /**
  * 过滤出ID 为偶数的数据
  * 
- * @author lWX306898
+ * @author liuzhao04
  * @version 1.0, 2017年1月26日
  */
 public class MessageFilter1 extends MessageFilter

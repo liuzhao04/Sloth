@@ -7,7 +7,7 @@ import org.apache.commons.lang3.StringUtils;
 /**
  * 配置获取帮助工具
  *
- * @author lWX306898
+ * @author liuzhao04
  * @version 1.0, 2017年1月24日
  */
 public class ConfigureHelp

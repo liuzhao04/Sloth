@@ -13,7 +13,7 @@ import com.sloth.msg.MessageUnit;
 /**
  * 消息过滤器定义
  *
- * @author lWX306898
+ * @author liuzhao04
  * @version 1.0, 2017年1月24日
  */
 public class MessageFilter implements IHandle

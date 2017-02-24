@@ -5,7 +5,7 @@ import com.sloth.exception.SlothException;
 /**
  * 工作流初始化错误
  *
- * @author lWX306898
+ * @author liuzhao04
  * @version 1.0, 2017年1月26日
  */
 public class InitWorkFlowException extends SlothException

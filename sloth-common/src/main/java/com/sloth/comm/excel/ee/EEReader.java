@@ -6,7 +6,7 @@ import com.sloth.comm.excel.ee.xlsx.XlsxReader;
 /**
  * 事件驱动Excel读取工具（兼容03/07版Excel）
  * 
- * @author lWX306898
+ * @author liuzhao04
  * @version 1.0, 2017年2月9日
  */
 public class EEReader

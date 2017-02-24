@@ -3,7 +3,7 @@ package com.sloth.comm.excel.ee;
 /**
  * 单元处理接口
  *
- * @author lWX306898
+ * @author liuzhao04
  * @version 1.0, 2017年1月26日
  */
 public interface IParseCell
@@ -18,11 +18,17 @@ public interface IParseCell
     /**
      * 开始处理某行
      *
-     * @param rowNum 行id
-     * @param sCol 列起点
-     * @param eCol 列终点
+     * @param rownId 行id
      */
-    public void startRow(int rowNum, int sCol, int eCol);
+    public void startRow(int rownId);
+    
+    
+    /**
+     * 结束处理某行
+     *
+     * @param rownId 行id
+     */
+    public void endRow(int rownId);
 
     /**
      * 单元处理实现

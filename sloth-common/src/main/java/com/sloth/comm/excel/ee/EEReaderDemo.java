@@ -6,7 +6,7 @@ public class EEReaderDemo implements IParseCell
     {
         try
         {
-            EEReader eer = new EEReader("C:\\Users\\lwx306898\\Desktop\\性能分析\\B120_t1xlwt.xlsx",
+            EEReader eer = new EEReader("C:\\Users\\liuzhao04\\Desktop\\性能分析\\B120_t1xlwt.xlsx",
                                         new String[]{"汇总M", "组件下Handle"},
                                         new EEReaderDemo());
             eer.start();
@@ -25,7 +25,7 @@ public class EEReaderDemo implements IParseCell
     }
 
     @Override
-    public void startRow(int rowNum, int sCol, int eCol)
+    public void startRow(int rowNum)
     {
         if (rowNum % 1000 == 1)
             System.out.println("row " + rowNum);
@@ -43,5 +43,11 @@ public class EEReaderDemo implements IParseCell
             }
             System.out.println("(" + i + "," + j + ") - " + value);
         }
+    }
+
+    @Override
+    public void endRow(int rownId)
+    {
+        
     }
 }

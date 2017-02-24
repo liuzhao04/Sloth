@@ -9,7 +9,7 @@ import com.sloth.msg.MessageBuilder;
 /**
  * 输出value的值 
  *
- * @author lWX306898
+ * @author liuzhao04
  * @version 1.0, 2017年1月26日
  */
 public class TestHandle2 implements IHandle

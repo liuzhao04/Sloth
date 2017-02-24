@@ -3,7 +3,7 @@ package com.sloth.comm.excel.ee;
 /**
  * Cell定义
  *
- * @author lWX306898
+ * @author liuzhao04
  * @version 1.0, 2017年1月26日
  */
 public class ECell
@@ -63,7 +63,7 @@ public class ECell
     /**
      * 单元格类型
      *
-     * @author lWX306898
+     * @author liuzhao04
      * @version 1.0, 2017年2月10日
      */
     public enum ECellType

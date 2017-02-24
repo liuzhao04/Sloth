@@ -2,6 +2,8 @@ package com.sloth.comm.excel.ee.xlsx;
 
 import java.io.InputStream;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.apache.poi.openxml4j.opc.OPCPackage;
 import org.apache.poi.openxml4j.opc.PackageAccess;
@@ -32,9 +34,10 @@ public class XlsxReader extends AbsExcelReader implements SheetContentsHandler
     private StylesTable styles;
 
     private IParseCell iParseCell = null;
-    
+
     private int cRowId = 0;
-    private int cColIndex = 0;
+
+    private final Pattern CID_PATTERN = Pattern.compile("([A-Z]+)+(\\d+)"); // ID匹配正则
 
     public XlsxReader(String path, String[] sheetNames) throws Exception
     {
@@ -63,7 +66,7 @@ public class XlsxReader extends AbsExcelReader implements SheetContentsHandler
         eSheet = null;
         List<String> cSheetNames = XmlUtils.getSheetNames(xssfReader);
         int index = 0;
-        for(int i = 0; i < cSheetNames.size(); i++)
+        for (int i = 0; i < cSheetNames.size(); i++)
         {
             String name = cSheetNames.get(index++);
             if (eSheet == null)
@@ -79,7 +82,7 @@ public class XlsxReader extends AbsExcelReader implements SheetContentsHandler
             }
             iParseCell.startSheet(eSheet);
             InputStream iStream = XmlUtils.findSheet(xssfReader, name);
-            if(iStream == null)
+            if (iStream == null)
             {
                 continue;
             }
@@ -99,13 +102,14 @@ public class XlsxReader extends AbsExcelReader implements SheetContentsHandler
     {
         ECell eCell = new ECell();
         eCell.setValue(value);
-        iParseCell.doCell(cRowId, this.cColIndex++, eCell);
+        int[] ids = getCellId(cellId);
+        iParseCell.doCell(cRowId, ids[1], eCell);
     }
 
     @Override
-    public void endRow(int rowNum)
+    public void endRow(int rowId)
     {
-
+        iParseCell.endRow(rowId);
     }
 
     @Override
@@ -118,8 +122,47 @@ public class XlsxReader extends AbsExcelReader implements SheetContentsHandler
     public void startRow(int rowId)
     {
         this.cRowId = rowId;
-        this.cColIndex = 0;
-        iParseCell.startRow(rowId, -1, -1);
+        iParseCell.startRow(rowId);
+    }
+
+    /**
+     * 获取单元ID
+     *
+     * @param cellId
+     * @return
+     */
+    private int[] getCellId(String cellId)
+    {
+        Matcher m = CID_PATTERN.matcher(cellId);
+        if (m.find())
+        {
+            String rIdStr = m.group(1);
+            int cId = parseRId(rIdStr);
+            int rId = Integer.parseInt(m.group(2));
+            return new int[]{rId, cId};
+        }
+        return null;
+    }
+
+    /**
+     * Excel 列字母ID（AB）转数字ID（27） <br>
+     * 数字ID范围[0 - n)
+     * 
+     * @param rIdStr
+     * @return
+     */
+    private int parseRId(String rIdStr)
+    {
+        char[] ichs = rIdStr.toCharArray();
+
+        int rs = 0;
+        for (int i = 0; i < ichs.length; i++)
+        {
+            int val = (int)ichs[i] - 65; // 去掉编码基数
+            // 个位上多1,运算完后需要减掉
+            rs += (val + 1) * Math.pow(26, ichs.length - i - 1);
+        }
+        return rs - 1;
     }
 
 }
