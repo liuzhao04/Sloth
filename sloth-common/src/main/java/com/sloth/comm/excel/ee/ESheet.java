@@ -1,5 +1,7 @@
 package com.sloth.comm.excel.ee;
 
+import org.apache.commons.lang3.StringUtils;
+
 /**
  * Sheet基础信息
  *
@@ -56,4 +58,13 @@ public class ESheet
         return true;
     }
 
+    public boolean isTheSameByIndex(int index)
+    {
+        return this.index == index;
+    }
+
+    public boolean isEmpty()
+    {
+        return index == -1 && StringUtils.isEmpty(name);
+    }
 }
